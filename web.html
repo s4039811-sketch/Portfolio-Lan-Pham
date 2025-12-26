@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Design Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Gloock&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Lan Pham Portfolio</title>
+    
+    <link rel="icon" type="image/png" href="a2_assets/logo.png">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+</head>
+
+<body>
+    <div class="custom-cursor"></div>
+
+    <section class="navigation-bar">
+        <div class="nav-container">
+            <a href="home.html" class="logo-link">
+                <img src="a2_assets/logo.png" alt="Logo" class="logo">
+            </a>
+
+            <div class="nav-links-desktop">
+                <a href="about.html">About</a>
+                <a href="works.html">Works</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+            <img src="a2_assets/Menu.png" alt="menu" class="menu-icon" id="menuBtn">
+        </div>
+    </section>
+    <div id="side-menu" class="overlay">
+        <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
+        <div class="overlay-content">
+            <a href="about.html">About</a>
+            <a href="works.html">Works</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </div>
+    <div id="backdrop"></div>
+<section class="work-section">
+    <h1 class="work-category">Web Design</h1>
+
+    <div class="tab-container">
+        <button class="tab-btn active" data-tab="0">Interactive</button>
+        <button class="tab-btn" data-tab="1">DMS2</button>
+    </div>
+
+    <div class="work-content">
+        <div class="video-container">
+            <iframe id="webIframe" src="" title="Web Project" allowfullscreen></iframe>
+        </div>
+
+        <div class="text-content">
+            <h2 class="project-title">Interactive Poetry</h2>
+            <div class="project-description">
+                <p>Lorem ipsum dolor sit amet...</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="visual-highlights" id="webHighlights">
+    <h2 class="section-subheading">Visual Highlights</h2>
+    <div class="highlights-grid">
+        <div class="highlight-item">
+            <img src="a2_assets/a1_web_1.png" alt="Web Image 1">
+        </div>
+        <div class="highlight-item">
+            <img src="a2_assets/a1_web_2.png" alt="Web Image 2">
+        </div>
+        <div class="highlight-item">
+            <img src="a2_assets/a1_web_3.png" alt="Web Image 3">
+        </div>
+    </div>
+    <h2 class="return-top" id="backToTop">Back to top</h2>
+</section>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

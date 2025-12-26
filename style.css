@@ -1,0 +1,1736 @@
+:root {
+    --bg-black: #1B1212;
+    --accent-red: #A2303A;
+    --text-pink: #F2CED8;
+    --text-cream: #FFDEAD;
+    --text-white: #FFFFFF;
+    --grid-margin: 9.6vw;
+    /* Tương đương Margin 40px trên mobile */
+    --grid-gutter: 4.8vw;
+    /* Tương đương Gutter 20px */
+    --hero-font: "Unifrakturmaguntia";
+    --main-heading: "Gloock";
+    --body-font: "Lexend";
+}
+
+/* Base Setup */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    cursor: none;
+    background-color: var(--bg-black);
+    overflow-x: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 80px;
+    /* Tạo khoảng trống bằng độ cao của navigation bar */
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: var(--text-pink);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease-out;
+}
+
+.custom-cursor.active {
+    transform: translate(-50%, -50%) scale(2.5);
+}
+
+/* Navigation */
+.navigation-bar {
+    width: 100vw;
+    padding: 1.5rem 0;
+    position: fixed;
+    /* Cố định vị trí so với cửa sổ trình duyệt */
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    /* Đảm bảo nằm trên cùng của tất cả các lớp khác */
+    background-color: rgba(27, 18, 18, 0.8);
+    /* Thêm nền mờ để không bị lẫn với nội dung bên dưới khi cuộn */
+    backdrop-filter: blur(5px);
+    /* Hiệu ứng mờ kính hiện đại */
+    transition: background-color 0.3s ease;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 85vw;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 2rem;
+}
+
+.menu-icon {
+    width: 2.5rem;
+    cursor: pointer;
+}
+
+/* HOMEPAGE */
+/* Container chính áp dụng Grid 6 cột, 12 hàng */
+.hero-grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    /* Hàng 1 (logo): 60px, Hàng 2 (ảnh): chiếm hết phần còn lại (1fr), Hàng 3 (chữ): tự theo nội dung */
+    grid-template-rows: auto 1fr auto auto;
+    height: 90vh;
+    padding: var(--grid-margin);
+    gap: var(--grid-gutter);
+    box-sizing: border-box;
+}
+
+/* Khối hình ảnh (Hàng 2 đến hàng 10) */
+.hero-image-block {
+    grid-column: 1 / 7;
+    grid-row: 2;
+    position: relative;
+    display: flex;
+    /* Đổi từ center sang flex-start để bám lề trái */
+    justify-content: flex-start;
+    align-items: flex-end;
+    overflow: hidden;
+    /* Đảm bảo ảnh không tràn ra ngoài khối */
+}
+
+/* Hình chữ nhật màu đỏ thay thế ảnh nền */
+.red-rectangle {
+    width: 100%;
+    height: 100%;
+    background-color: var(--accent-red);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.char-img {
+    position: relative;
+    z-index: 2;
+    /* Hình ảnh sẽ cao bằng 95% container và tự động tính chiều rộng */
+    height: 85%;
+    width: auto;
+
+    /* Đảm bảo bám sát lề trái */
+    margin-left: 0;
+
+    /* Giúp ảnh mượt mà khi scale */
+    object-fit: contain;
+    object-position: left bottom;
+}
+
+/* Tiêu đề Lan Pham */
+h1.name {
+    grid-column: 1 / 7;
+    grid-row: 3;
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: clamp(3rem, 15vw, 10rem);
+    color: var(--text-cream);
+    margin: 1vh 0;
+    text-align: center;
+    align-self: center;
+
+    /* Giảm font-weight theo yêu cầu */
+    font-weight: 100;
+    letter-spacing: -0.02em;
+}
+
+/* Dòng giới thiệu vai trò */
+h3.role {
+    grid-column: 1 / 7;
+    grid-row: 4;
+    font-family: 'Lexend', serif;
+    font-size: 1rem;
+    color: var(--text-cream);
+    text-align: center;
+    font-weight: normal;
+    margin: 0;
+    align-self: flex-start;
+}
+
+/* Overlay Menu - Cấu trúc cố định */
+.overlay {
+    height: 100vh;
+    width: 0;
+    position: fixed;
+    z-index: 3000;
+    /* Cao hơn .navigation-bar (2000) */
+    top: 0;
+    right: 0;
+    background-color: var(--text-pink);
+    transition: 0.5s ease-in-out;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Khi menu được mở qua Class "open" */
+.overlay.open {
+    width: 60%;
+    /* Chiếm 60% màn hình như bạn yêu cầu */
+}
+
+/* Container chứa các đường link */
+.overlay-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Đảm bảo text nằm giữa */
+    gap: 2.5rem;
+    /* Khoảng cách giữa các mục (tăng lên cho thoáng) */
+    width: 100%;
+}
+
+/* Định dạng các đường link menu */
+.overlay a {
+    text-decoration: none;
+    font-size: 2.5rem;
+    /* Kích thước lớn theo phong cách thiết kế của bạn */
+    color: var(--bg-black);
+    font-family: 'Gloock', serif;
+    transition: 0.3s;
+    white-space: nowrap;
+    /* Không cho chữ bị xuống dòng khi co giãn menu */
+}
+
+/* Hiệu ứng hover cho link */
+.overlay a:hover {
+    opacity: 0.7;
+    transform: scale(1.1);
+}
+
+/* Nút đóng (X) */
+.closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px !important;
+    /* Ưu tiên kích thước nút đóng */
+}
+
+/* Logo decoration */
+.logo-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    cursor: none;
+    /* Giữ cursor custom của bạn */
+}
+
+.logo {
+    width: 3rem;
+    display: block;
+}
+
+
+/* ABOUT PAGE */
+.about-section {
+    width: 85vw;
+    max-width: 40rem;
+    margin: 2rem auto;
+    text-align: center;
+    display: flex;
+    /* Đảm bảo các khối bên trong cũng được quản lý */
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-title {
+    font-family: var(--main-heading);
+    font-weight: 100;
+    font-size: 3.5rem;
+    color: var(--text-cream);
+    margin: 2rem;
+}
+
+/* Container for about page pfp */
+.about-image-container {
+    position: relative;
+    /* Xóa width/height cố định (25rem/20rem) để tránh bị tràn khi màn hình nhỏ */
+    width: 100%;
+    max-width: 25rem;
+    aspect-ratio: 1 / 1;
+    /* Giữ tỷ lệ khung hình vuông để căn giữa dễ hơn */
+    margin: 0 auto 1rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-pfp {
+    position: relative;
+    width: 85%;
+    /* Tự động co giãn theo container */
+    height: auto;
+    z-index: 2;
+    border-radius: 70%;
+    object-fit: contain;
+    /* Loại bỏ scale-down nếu bạn muốn ảnh luôn chiếm % cố định */
+}
+
+/* Định dạng đoạn văn bản */
+.about-text p {
+    font-family: 'Lexend', serif;
+    font-size: clamp(1rem, 3vw, 1.1rem);
+    /* Tự động giảm cỡ chữ khi màn hình nhỏ */
+    line-height: 1.6;
+    color: var(--text-white);
+    text-align: justify;
+}
+
+/* CONTACT PAGE - REFINED & RESPONSIVE */
+
+.contact-section {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 5rem var(--grid-margin);
+    /* Thêm padding top/bottom để không bị dính lề khi scale */
+    box-sizing: border-box;
+    background-color: var(--bg-black);
+}
+
+.contact-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(3rem, 10vh, 4rem);
+    /* Khoảng cách này cũng sẽ co giãn theo chiều cao màn hình */
+    width: 100%;
+}
+
+.catchphrase {
+    /* Khống chế chiều ngang để chữ tự xuống dòng khi màn hình hẹp */
+    max-width: 90%;
+}
+
+.catchphrase-line {
+    font-family: var(--main-heading);
+    /* Co giãn từ 2.5rem (mobile) đến 5rem (desktop) dựa trên chiều rộng màn hình (8vw) */
+    font-size: clamp(3rem, 8vw, 5rem);
+    line-height: 1.3;
+    color: var(--text-cream);
+    font-weight: normal;
+    margin: 0;
+    /* Ngăn chặn từ bị cắt ngang và ép xuống dòng tự nhiên */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.social-media {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.social-media a {
+    text-decoration: none;
+    transition: 0.3s ease;
+    display: inline-block;
+    /* Đảm bảo transform hoạt động tốt */
+}
+
+.social-media a:hover {
+    opacity: 0.6;
+    transform: translateX(10px);
+}
+
+.contact-category {
+    font-family: var(--body-font);
+    /* Co giãn nhỏ hơn một chút trên mobile để tránh tràn màn hình */
+    font-size: clamp(2rem, 4vw, 2.2rem);
+    color: var(--text-white);
+    font-weight: 300;
+    margin: 0;
+    letter-spacing: 0.03em;
+}
+
+/* WORKS PAGE */
+/* Tối ưu hóa Grid cho Works Page */
+.works-grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    width: 100vw;
+    height: 90vh;
+    padding: 0;
+    /* Để scroll wrapper chiếm trọn chiều ngang */
+    box-sizing: border-box;
+}
+
+/* Container cuộn ngang */
+.tarot-scroll-wrapper {
+    grid-column: 1 / 7;
+    grid-row: 3 / 10;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    align-items: center;
+    scroll-snap-type: x mandatory;
+    /* Hít thẻ bài vào giữa khi cuộn */
+    scrollbar-width: none;
+    /* Ẩn scrollbar trên Firefox */
+}
+
+.tarot-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+    /* Ẩn scrollbar trên Chrome/Safari */
+}
+
+.tarot-container {
+    display: grid;
+    grid-auto-flow: column;
+    /* Sắp xếp thẻ bài theo hàng ngang */
+    gap: 4vw;
+    /* Khoảng cách giữa các lá bài */
+    padding: 0vw 8vw;
+    /* Padding để lá bài đầu/cuối có thể nằm giữa màn hình */
+}
+
+/* Cấu trúc Thẻ bài lật 180 độ */
+.tarot-card {
+    flex: 0 0 auto;
+    width: 70vw;
+    max-width: 330px;
+    /* Độ rộng thẻ bài trên mobile */
+    max-height: 480px;
+    height: 120vw;
+    /* Độ cao thẻ bài trên mobile */
+    perspective: 1200px;
+    /* Độ sâu của hiệu ứng 3D */
+    scroll-snap-align: center;
+    cursor: none;
+    text-decoration: none;
+    margin: 0;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+/* Hiệu ứng lật khi Hover (hoặc Active trên Mobile) */
+
+.tarot-card:hover .card-inner,
+.tarot-card:active .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    /* Ẩn mặt phía sau khi lật */
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-front img,
+.card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Đổi từ scale-down sang contain để luôn thấy viền lá bài */
+        border-radius: 15px;
+}
+
+/* Mặt sau đã được lật sẵn 180 độ */
+.card-back {
+    transform: rotateY(180deg);
+}
+
+/* Textbox ở hàng 11 */
+.works-textbox {
+    grid-column: 1 / 7;
+    grid-row: 11 / 12;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.works-textbox p {
+    font-family: 'Gloock', serif;
+    font-size: 1.7rem;
+    color: var(--text-white);
+    text-align: center;
+    margin: 0;
+}
+
+/* Layout chung cho trang cuộn dọc */
+.work-section {
+    width: 100%;
+    max-width: 85vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5rem;
+}
+
+.visual-highlights {
+    width: 100%;
+    max-width: 85vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Quan trọng: Căn giữa theo trục ngang */
+    padding-bottom: 5rem;
+}
+
+/* Typography tuân thủ font-weight normal và căn giữa */
+.work-category {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: clamp(4rem, 10vw, 7rem);
+    /* Tăng size cho desktop */
+    color: var(--text-cream);
+    font-weight: normal;
+    text-align: center;
+    /* Căn giữa chữ */
+    width: 100%;
+    /* Chiếm hết chiều ngang để căn giữa có tác dụng */
+    margin: 2rem 0;
+    /* Khoảng cách trên dưới */
+    display: block;
+    /* Đảm bảo nó là khối độc lập */
+}
+
+.project-title {
+    font-family: 'Gloock', serif;
+    font-size: clamp(1.5rem, 7vw, 3.5rem);
+    color: var(--text-cream);
+    font-weight: normal;
+    text-align: left;
+    margin: 2rem 0;
+}
+
+.section-subheading {
+    font-family: 'Gloock', serif;
+    font-size: 2rem;
+    color: var(--text-cream);
+    font-weight: normal;
+    text-align: center;
+    /* Căn giữa văn bản */
+    margin: 1.5rem 0;
+}
+
+.project-text p {
+    font-family: 'Lexend', sans-serif;
+    /* Hoặc font bạn đã set ở root */
+    color: var(--text-white);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: left;
+    /* Căn giữa text theo yêu cầu */
+    max-width: 600px;
+}
+
+/* Video Responsive */
+.video-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-bottom: 2rem;
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+/* Grid cho Visual Highlights (Tự động xuống hàng khi thu nhỏ) */
+.highlights-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Đảm bảo các item ảnh nằm chính giữa */
+    gap: 4rem;
+    width: 100%;
+    max-width: 800px;
+}
+
+.highlight-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    /* Bo nhẹ góc cho tinh tế */
+}
+
+/* Back to top button */
+.return-top {
+    font-family: 'Gloock', serif;
+    color: var(--text-pink);
+    cursor: pointer;
+    margin-top: 5rem;
+    /* Tăng khoảng cách phía trên */
+    margin-bottom: 2rem;
+    font-weight: normal;
+    transition: opacity 0.3s;
+    text-align: center;
+    width: auto;
+    align-self: center;
+    /* Ép nút nằm giữa container flex */
+}
+
+.return-top:hover {
+    opacity: 0.7;
+}
+
+
+/* Tab Buttons Styling */
+.tab-container {
+    display: flex;
+    gap: 4vw;
+    margin-bottom: 1vh;
+}
+
+.tab-btn {
+    padding: 10px 25px;
+    border-radius: 20px;
+    border: none;
+    font-family: 'Lexend', sans-serif;
+    cursor: pointer;
+    background-color: #E6C8D1;
+    /* Màu unchosen */
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    background-color: var(--accent-red);
+    color: white;
+}
+
+/* Gallery Layout */
+.gallery-wrapper {
+    display: flex;
+    flex-direction: row;
+    /* Xếp hàng ngang */
+    align-items: center;
+    justify-content: center;
+    gap: 3vw;
+    width: 95vw;
+    max-width: 1200px;
+    position: relative;
+    margin: 2rem 0;
+}
+
+.image-display-area {
+    width: 90vw;
+    max-width: 600px;
+}
+
+.image-display-area img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.arrow {
+    width: clamp(30px, 6vw, 60px);
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.arrow.hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+/* Mặc định ẩn menu chữ trên Mobile/iPad */
+.nav-links-desktop {
+    display: none;
+    gap: 2rem;
+}
+
+.nav-links-desktop a {
+    text-decoration: none;
+    color: var(--text-pink);
+    font-family: var(--body-font);
+    font-size: 1.1rem;
+    font-weight: normal;
+    transition: opacity 0.3s;
+}
+
+.nav-links-desktop a:hover {
+    opacity: 0.5;
+}
+
+/* Cụ thể cho phần mô tả dự án */
+.project-description p {
+    color: var(--text-white);
+    /* Mượn màu trắng từ root */
+    font-family: 'Lexend', sans-serif;
+    /* Đảm bảo dùng đúng font của thiết kế */
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+    text-align: left;
+    /* Căn lề trái theo yêu cầu của bạn */
+}
+
+/* Đảm bảo container chứa text không bị quá hẹp */
+/* Ép màu trắng và Font Lexend cho toàn bộ thẻ p bên trong text-content */
+.text-content p {
+    color: var(--text-white) !important;
+    font-family: 'Lexend', sans-serif !important;
+    opacity: 1;
+    visibility: visible;
+}
+@media screen and (max-width: 767px) {
+    .work-section {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .tab-container {
+        display: flex;
+        /* Sử dụng gap nhỏ để tiết kiệm diện tích ngang */
+        gap: 0.5rem; 
+        margin-bottom: 2rem;
+        width: 100%;
+        /* Đảm bảo container không cho phép nội dung tràn ra ngoài */
+        box-sizing: border-box;
+        justify-content: space-between;
+        /* Tắt cuộn ngang để ép các nút phải co lại vào trong */
+        overflow: hidden; 
+    }
+
+    .tab-btn {
+        /* flex: 1 giúp các nút luôn có độ rộng bằng chằn chặn nhau */
+        flex: 1;
+        /* Quan trọng: Cho phép nút co nhỏ hơn nội dung chữ bên trong nếu cần */
+        min-width: 0; 
+        /* Giảm font-size xuống một chút để chữ không bị tràn */
+        font-size: 0.2rem; 
+        /* Giảm padding ngang tối đa để dành không gian cho chữ */
+        padding: 0.7rem 0.2rem;
+        
+        border-radius: 0.5rem;
+        font-family: 'Lexend', sans-serif;
+        background: #F2CED8;
+        color: var(--bg-black);
+        text-align: center;
+        /* Cho phép chữ tự động xuống dòng nếu quá dài thay vì cắt ngang */
+        white-space: normal; 
+        /* Căn giữa chữ theo chiều dọc nếu có nút bị nhảy 2 dòng */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1.2;
+        
+        box-sizing: border-box;
+        border: none;
+        font-weight: normal;
+    }
+
+    .tab-btn.active {
+        background-color: var(--accent-red);
+        color: #fff;
+    }
+
+    /* Tăng lề trái cho phần text để khớp với ảnh mẫu đầu tiên bạn gửi */
+    .text-content {
+        padding-left: 1rem; 
+        padding-right: 1rem;
+        box-sizing: border-box;
+    }
+
+    .project-title {
+        font-size: 2rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+        font-family: 'Gloock', serif;
+    }
+
+    .project-description p,
+    .project-text p {
+        font-size: 1rem;
+        line-height: 1.6;
+        font-family: 'Lexend', sans-serif;
+    }
+}
+/* =========================================
+   OVERLAY MENU CHO TABLET (IPAD)
+   ========================================= */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+
+    /* 1. Mở rộng chiều rộng menu để chữ không bị gò bó */
+    .overlay.open {
+        width: 50vw; /* Chiếm toàn màn hình hoặc 70vw tùy ý bạn */
+    }
+
+    /* 2. Tăng khoảng cách giữa các mục menu (Line height/Gap) */
+    .overlay-content {
+        gap: 5vh; /* Sử dụng vh để khoảng cách tự co giãn theo chiều cao */
+        padding-top: 5vh;
+    }
+
+    /* 3. Tăng cỡ chữ lớn và sang trọng hơn */
+    .overlay a {
+        /* font-size: min 3.5rem, tối ưu 8vw, max 6rem */
+        font-size: clamp(3.5rem, 8vw, 6rem); 
+        letter-spacing: 0.05em; /* Giãn chữ nhẹ cho thoáng */
+        font-weight: 100;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* 4. Điều chỉnh nút đóng (X) to và dễ bấm hơn */
+    .closebtn {
+        top: 30px !important;
+        right: 50px !important;
+        font-size: 80px !important;
+        color: var(--bg-black);
+    }
+    /* 5. Lớp nền mờ che phủ màn hình */
+#backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Màu tối mờ */
+    z-index: 2500; /* Thấp hơn side-menu (3000) nhưng cao hơn nav (2000) */
+    display: none; /* Mặc định ẩn */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* 6. Hiển thị backdrop khi menu mở */
+#side-menu.open ~ #backdrop, 
+#backdrop.active {
+    display: block;
+    opacity: 1;
+}
+}
+/* BREAKPOINT CHO IPAD-HERO (Từ 768px tới dưới 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .hero-grid-container {
+        display: flex;
+        /* Chuyển sang flex để kiểm soát dòng chảy dọc tốt hơn */
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 100vh;
+        padding: 0;
+        /* Xóa padding để ảnh tràn viền hoặc sát lề nếu cần */
+        gap: 0;
+    }
+
+    /* Khối ảnh và hình chữ nhật đỏ */
+    .hero-image-block {
+        width: 100%;
+        height: 70vh;
+        /* Chiếm khoảng 55% chiều cao màn hình */
+        margin-top: 20px;
+        /* Khoảng cách với Nav bar */
+        position: relative;
+    }
+
+    .red-rectangle {
+        width: 85%;
+        /* Thu nhỏ chiều ngang một chút để giống ảnh mẫu */
+        height: 100%;
+        margin-left: auto;
+        /* Đẩy khối đỏ sang phải hoặc căn giữa tùy ý */
+        margin-right: auto;
+        margin-top: auto;
+        left: 0;
+        right: 0;
+    }
+
+    .char-img {
+        height: 100%;
+        /* Ảnh cao bằng khối đỏ */
+        width: auto;
+        position: absolute;
+        left: 7.5%;
+        /* Căn chỉnh để ảnh đè lên mép trái khối đỏ giống screenshot */
+        bottom: 0;
+        object-fit: contain;
+    }
+
+    /* Tiêu đề Lan Pham */
+    h1.name {
+        font-size: 14vw;
+        /* Tăng kích thước chữ để chiếm không gian */
+        margin: 5vh 0 0 0;
+        text-align: center;
+        line-height: 0.9;
+    }
+
+    /* Dòng Role */
+    h3.role {
+        font-size: 1.1rem;
+        text-align: center;
+        margin-top: 3vh;
+        padding: 0 20vw;
+        line-height: 1.4;
+    }
+
+    .menu-icon {
+        display: block !important;
+    }
+
+    .nav-links-desktop {
+        display: none !important;
+    }
+
+}
+
+/* =========================================
+   BREAKPOINT CHO TABLET (WORKS PAGE - TAROT)
+   Dành cho dải màn hình từ 768px đến 1023px
+   ========================================= */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+
+    /* 1. Cấu trúc Grid tổng thể của trang Works */
+    .works-grid-container {
+        display: grid;
+        /* Giữ 6 cột để đồng bộ với base, nhưng điều chỉnh hàng */
+        grid-template-rows: 80px 1fr auto 100px; 
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    /* 2. Container cuộn bài Tarot */
+    .tarot-scroll-wrapper {
+        grid-row: 2 / 3;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Cho phép bắt đầu từ trái để cuộn */
+        overflow-x: auto;
+        padding: 0 5vw;
+        /* Ẩn thanh cuộn để giữ thẩm mỹ */
+        scrollbar-width: none; 
+    }
+
+    .tarot-scroll-wrapper::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* 3. Container chứa các lá bài */
+    .tarot-container {
+        display: flex;
+        flex-direction: row;
+        gap: 4vw; /* Khoảng cách giữa các lá bài */
+        padding: 1vh 5vw 5vw; /* Padding để lá bài cuối không dính lề */
+    }
+
+    /* 4. Định dạng kích thước lá bài Tarot trên Tablet */
+    .tarot-card {
+        flex: 0 0 auto;
+        /* Tính toán để hiển thị khoảng 2 lá bài rưỡi trên màn hình iPad */
+        width: 35vw; 
+        max-width: 320px;
+        height: auto;
+        aspect-ratio: 2 / 3.5; /* Giữ tỉ lệ chuẩn của lá bài */
+        perspective: 1200px;
+    }
+
+    /* Đảm bảo hình ảnh bài hiển thị trọn vẹn */
+    .card-front img,
+    .card-back img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 12px;
+    }
+
+    /* 5. Textbox "Which one are you seeking?" */
+    .works-textbox {
+        grid-row: 3 / 4;
+        padding-bottom: 5vh;
+    }
+
+    .works-textbox p {
+        /* Sử dụng font Gloock đồng bộ với main heading */
+        font-family: var(--main-heading);
+        font-size: clamp(2rem, 5vw, 2.8rem);
+        color: var(--text-white);
+        letter-spacing: 0.02em;
+        text-align: center;
+    }
+
+    /* 6. Navigation Bar trên Tablet */
+    .nav-container {
+        width: 90vw;
+    }
+
+    /* Ẩn menu chữ desktop, hiện hamburger icon nếu cần (tùy logic của bạn) */
+    .nav-links-desktop {
+        display: none;
+    }
+
+    .menu-icon {
+        display: block !important;
+    }
+}
+/* =========================================
+   BREAKPOINT CHO TABLET (WEB DESIGN)
+   Dành cho trang Web Design
+   ========================================= */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+
+    /* 1. Layout tổng thể chuyển sang dạng cột dọc để đủ không gian */
+    .work-section {
+        max-width: 90vw;
+        padding-top: 2rem;
+        margin: 0 auto;
+    }
+
+    /* 2. Tiêu đề chính (Web Design) co giãn theo màn hình */
+    .work-category {
+        font-size: clamp(6.5rem, 8vw, 5.5rem);
+        margin-bottom: 2.5rem;
+    }
+
+    /* 3. Căn chỉnh container chứa các nút tab */
+    .tab-container {
+        display: flex;
+        justify-content: center;
+        /* Căn giữa các nút bấm */
+        gap: 3vw;
+        /* Khoảng cách linh hoạt giữa các nút */
+        margin-bottom: 3vh;
+        /* Khoảng cách với khung video bên dưới */
+        width: 100%;
+        padding: 0 5vw;
+        /* Padding hai bên để nút không dính sát mép */
+        box-sizing: border-box;
+    }
+
+    /* Tối ưu hóa nút bấm trên Tablet */
+    .tab-btn {
+        /* Padding co giãn: dọc từ 10-12px, ngang từ 30-45px */
+        padding: clamp(10px, 1.5vh, 12px) clamp(30px, 5vw, 45px);
+
+        /* Font chữ co giãn linh hoạt */
+        font-size: clamp(1rem, 2.5vw, 1.3rem);
+
+        border-radius: 50px;
+        /* Giữ hình dạng viên thuốc (pill shape) */
+        border: none;
+        font-family: 'Lexend', sans-serif;
+        cursor: pointer;
+        background-color: var(--text-pink);
+        color: var(--bg-black);
+        white-space: nowrap;
+        /* Giữ chữ trên một dòng */
+        transition: all 0.3s ease;
+        flex: 0 1 auto;
+        /* Cho phép nút tự co lại nếu không gian quá hẹp */
+    }
+
+    /* Hiệu ứng khi nút đang được chọn */
+    .tab-btn.active {
+        background-color: var(--accent-red);
+        color: var(--text-white);
+        transform: scale(1.05);
+        /* Phóng to nhẹ để tạo điểm nhấn */
+    }
+
+    /* 3. Container chứa video và text chuyển sang cột dọc */
+    .work-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        width: 100%;
+        margin-top: 2rem;
+    }
+
+    /* 4. Khung chứa Video: Đảm bảo tỷ lệ 16:9 và không bị tràn */
+    .video-container {
+        width: 100%;
+        max-width: 800px;
+        /* Giới hạn chiều ngang tối đa trên tablet */
+        aspect-ratio: 16 / 9;
+        margin-bottom: 0;
+        flex: none;
+        /* Bỏ flex-grow từ desktop */
+    }
+
+    .video-container iframe {
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+    }
+
+    /* 5. Nội dung chữ ở dưới */
+    .text-content {
+        width: 100%;
+        max-width: 800px;
+        margin-left: 0;
+        /* Bỏ margin-left từ desktop */
+        text-align: left;
+        flex: none;
+    }
+
+    /* Tiêu đề dự án (Project Title) */
+    .project-title {
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        text-align: left;
+    }
+
+    /* Đoạn văn mô tả: Tự động xuống dòng và co giãn font */
+    .project-description p,
+    .project-text p {
+        font-size: clamp(1.3rem, 2vw, 1.3rem);
+        line-height: 1.6;
+        color: var(--text-white);
+        max-width: 100%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+    }
+
+    .section-subheading {
+        font-size: clamp(2rem, 4vw, 3rem);
+        margin-bottom: 4rem;
+    }
+}
+
+/* =========================================
+   BREAKPOINT CHO TABLET (GRAPHIC)
+   Dành cho trang Graphic Design
+   ========================================= */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+
+    .work-section {
+        max-width: 90vw; /* Tăng nhẹ chiều rộng tổng thể */
+        padding-top: 2rem;
+        margin: 0 auto;
+        overflow-x: hidden; /* Chống tràn ngang tuyệt đối */
+    }
+
+    /* 2. Tiêu đề "Graphic Design" - Sửa lỗi clamp */
+    .work-category {
+        /* Giá trị clamp: tối thiểu 3.5rem, tối ưu 8vw, tối đa 5.5rem */
+        font-size: clamp(6.5rem, 8vw, 5.5rem); 
+        margin-bottom: 2.5rem;
+        text-align: center;
+    }
+
+    /* 3. Container chứa các nút Tab */
+    .tab-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 3vw;
+        width: 100%; /* Để tab tự do hơn */
+        margin-bottom: 4vh;
+        padding: 0 5vw;
+        box-sizing:border-box;
+    }
+    
+
+    /* 4. Layout Gallery + Text */
+    .gallery-plus-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        width: 100%;
+    }
+
+    /* 5. Khu vực Gallery (Ảnh và Mũi tên) - QUAN TRỌNG */
+    .gallery-wrapper {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 900px; /* Thu hẹp lại một chút so với 1000px để tạo khoảng trống */
+        margin-bottom: 1vh;
+        padding: 0 60px; /* Tăng padding để đẩy mũi tên vào trong, tránh sát mép */
+        box-sizing: border-box;
+    }
+
+    .image-display-area {
+        width: 100%;
+        /* Bỏ aspect-ratio cứng nếu ảnh thực tế có tỷ lệ khác nhau, 
+           hoặc dùng giá trị an toàn hơn */
+        max-width: 600px; 
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 8px; /* Bo góc nhẹ cho giống thiết kế */
+    }
+
+    .image-display-area img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        display: block;
+    }
+
+    /* Định vị 2 mũi tên */
+    .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        z-index: 10;
+        /* Giới hạn kích thước vùng bấm */
+        width: 40px; 
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .arrow.left-arrow {
+        left: 10px; /* Cách mép container 10px */
+    }
+
+    .arrow.right-arrow {
+        right: 10px; /* Cách mép container 10px */
+    }
+
+    .arrow img {
+        width: 30px; /* Kích thước icon mũi tên */
+        height: auto;
+    }
+
+    /* 6. Nội dung chữ bên dưới ảnh */
+    .text-content {
+        width: 100%;
+        max-width: 80vw;
+        text-align: left;
+        padding: 0 2rem;
+        margin-top: 2vh;
+    }
+
+    .project-title {
+        /* Tăng cỡ chữ tiêu đề bằng clamp */
+        font-size: clamp(2.5rem, 5vw, 3.5rem); 
+        margin-bottom: 1.5rem;
+    }
+
+    .project-description p {
+        /* Điều chỉnh lại giá trị clamp để không bị nhỏ hơn tiêu đề */
+        font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+        line-height: 1.7;
+        color: var(--text-white);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+    }
+
+    .project-title {
+        font-size: clamp(3rem, 5vw, 4.5rem);
+        margin-bottom: 3vh;
+    }
+}
+/* BREAKPOINT CHO DESKTOP-HERO (Từ 1024x trở lên) */
+@media screen and (min-width: 1024px) {
+    .hero-grid-container {
+        grid-template-columns: 1fr 1.5fr;
+        /* Chia 2 cột: Trái (Text), Phải (Ảnh) */
+        grid-template-rows: 1fr;
+        padding: 0 5vw;
+        align-items: center;
+        /* Căn giữa nội dung theo chiều dọc */
+    }
+
+    /* Đưa ảnh sang cột phải */
+    .hero-image-block {
+        grid-column: 2;
+        grid-row: 1;
+        height: 80vh;
+    }
+
+    /* Đưa chữ sang cột trái */
+    h1.name {
+        grid-column: 1;
+        grid-row: 1;
+        text-align: left;
+        font-size: clamp(6rem, 8vw, 8rem);
+        align-self: center;
+    }
+
+    h3.role {
+        grid-column: 1;
+        grid-row: 1;
+        text-align: left;
+        margin-top: 40vh;
+        /* Đẩy role xuống dưới Name */
+        align-self: center;
+        font-size: 1.5rem
+    }
+
+    /* Trên Desktop mới hiện Menu chữ và ẩn Hamburger */
+    .menu-icon {
+        display: none !important;
+    }
+
+    .nav-links-desktop {
+        display: flex !important;
+        /* Đổi từ none sang flex để hiển thị */
+        gap: 5rem;
+    }
+
+    .nav-links-desktop a {
+        text-decoration: none;
+        color: var(--text-pink);
+        font-family: var(--body-font);
+        font-size: 2rem;
+        /* Tăng cỡ chữ to hơn */
+        font-weight: 100;
+        letter-spacing: 0.05em;
+        /* Giãn chữ cho thoáng */
+        transition: opacity 0.3s;
+    }
+
+    @media screen and (min-width: 1024px) {
+
+        /* Loại bỏ hiệu ứng cuộn ngang trên Desktop để dàn hàng ngang như ảnh */
+        .tarot-scroll-wrapper {
+            overflow-x: visible;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            grid-row: 1 / 11;
+            /* Điều chỉnh vị trí hàng để cân đối với text bên dưới */
+        }
+
+        .tarot-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 3vw;
+            /* Khoảng cách giữa các lá bài */
+            padding: 0;
+            width: 100vw;
+        }
+
+        .tarot-card {
+            width: 30vw;
+            /* Thu nhỏ chiều ngang để vừa 4 lá trên 1 hàng */
+            max-width: 300px;
+            height: 50vw;
+            /* Tỷ lệ chiều cao tương ứng */
+            max-height: 500px;
+        }
+
+        /* Chỉnh chữ "Which one are you seeking ?" to hơn trên Desktop */
+        .works-textbox p {
+            font-size: 3rem;
+            letter-spacing: 0.02em;
+            margin-bottom: 6.5vh;
+            /* Kéo chữ lên gần bài hơn nếu cần */
+        }
+
+        .works-grid-container {
+            grid-template-rows: 80px 1fr auto 200px;
+            /* Cấu trúc lại hàng cho thoáng */
+        }
+
+    }
+
+    /* Chỉ cho phép lật khi hover trên Desktop */
+    @media (hover: hover) {
+        .tarot-card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+    }
+
+    /* Giữ lật khi click trên thiết bị cảm ứng */
+    .tarot-card.flipped .card-inner {
+        transform: rotateY(180deg);
+    }
+}
+
+@media (hover: none) {
+    .custom-cursor {
+        display: none;
+    }
+
+    html,
+    body {
+        cursor: auto;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+
+    /*GRAPHIC DESIGN-DESKTOP*/
+
+    /* Main container for the gallery and text */
+    .gallery-plus-text {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        /* Căn giữa toàn bộ cụm nội dung */
+        gap: 6vw;
+        /* Tăng khoảng cách để làm chỗ trống cho mũi tên */
+        width: 100%;
+        max-width: 90vw;
+        /* Giới hạn để không sát mép màn hình */
+        margin: 4vh auto;
+        overflow: visible;
+        /* Cho phép mũi tên hiển thị nếu nằm ngoài border */
+    }
+
+    /* Left side: Image and Arrows */
+    .gallery-wrapper {
+        flex: 0 1 auto;
+        /* Không cho phép gallery phình to quá mức */
+        position: relative;
+        /* QUAN TRỌNG: Làm mốc cho mũi tên */
+        width: 50%;
+        /* Chiếm tối đa 50% chiều ngang */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Right side: Project Titles and Description */
+    .text-content {
+        flex: 1;
+        min-width: 300px;
+        /* Giới hạn chiều ngang tối thiểu để chữ phải xuống dòng thay vì bị bóp mép */
+        max-width: 500px;
+        text-align: left;
+    }
+
+    .image-display-area {
+        width: 100%;
+        max-width: 600px;
+        /* Giới hạn kích thước ảnh tối đa */
+    }
+
+    /* Heading inside text-content */
+    .project-title {
+        font-size: clamp(2rem, 3.5vw, 3.5rem);
+        /* Thu nhỏ thêm một chút khi màn hình hẹp */
+        margin-bottom: 1rem;
+        word-break: normal;
+        overflow-wrap: break-word;
+    }
+
+    .project-description p {
+        font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+        line-height: 1.6;
+        max-width: 100%;
+        /* Tự động xuống dòng là mặc định của thẻ p, 
+           nhưng ta thêm các thuộc tính sau để an toàn: */
+        white-space: normal;
+        overflow-wrap: break-word;
+    }
+
+    /* Ensure the main image area is the reference for arrows */
+    .image-display-area {
+        max-width: 700px;
+        /* Adjust based on your asset size */
+    }
+
+    /* Điều chỉnh vị trí mũi tên lồng vào giữa ảnh và text */
+    .arrow.right-arrow {
+        position: absolute;
+        position: absolute;
+        right: -70px;
+        /* Sát mép ảnh, tránh đè vào text-content */
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+    }
+
+    .arrow.left-arrow {
+        position: absolute;
+        left: -50px;
+        /* Điều chỉnh để sát mép ảnh hơn */
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+    }
+
+    .arrow img {
+        width: 40px;
+        height: auto;
+    }
+}
+
+/* Tìm và thay thế đoạn tab-container cũ */
+.tab-container {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2vh;
+    justify-content: center;
+    /* Căn giữa các nút bấm */
+    width: 100%;
+}
+
+.tab-btn {
+    padding: 12px 40px;
+    font-size: 1.5rem;
+    background-color: #F2CED8;
+    /* Match your --text-pink variable */
+    border-radius: 50px;
+    /* pill shape */
+    text-transform: none;
+    font-family: 'Lexend', sans-serif;
+}
+
+.tab-btn.active {
+    background-color: var(--accent-red);
+    color: white;
+}
+
+
+@media screen and (min-width: 1024px) {
+
+    /* ABOUT-DESKTOP*/
+    .about-section {
+        max-width: 85vw;
+        height: 100vh;
+        /* Căn giữa theo chiều dọc màn hình */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    /* Container chia 2 cột */
+    .about-grid-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        /* Cột ảnh và cột chữ */
+        gap: 5vw;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* Xử lý hình ảnh */
+    .about-image-container {
+        width: 100%;
+        max-width: 700px;
+        /* Điều chỉnh kích thước ảnh cho vừa mắt */
+        margin: 0;
+    }
+
+    .about-pfp {
+        width: 100%;
+        height: auto;
+        border-radius: 50%;
+        /* Giữ ảnh tròn */
+        object-fit: cover;
+    }
+
+    /* Xử lý phần chữ */
+    .about-text-content {
+        text-align: left;
+    }
+
+    .about-title {
+        font-family: var(--main-heading);
+        /* Font Gloock */
+        font-size: 6rem;
+        /* To và sang trọng như Figma */
+        margin-bottom: 2rem;
+        margin-left: 0;
+        /* Bỏ lề mobile */
+        font-weight: 100;
+    }
+
+    .about-text p {
+        font-size: 1.5rem;
+        /* Cỡ chữ dễ đọc trên desktop */
+        line-height: 1.5;
+        text-align: left;
+        color: var(--text-white);
+    }
+}
+
+@media screen and (min-width: 1024px) {
+
+    /* --- Art, 3D, Web: Main Container Section --- */
+    .work-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 90vw;
+        margin: 0 auto;
+        padding-top: 5vh;
+    }
+
+    /* --- Cột layout: Video trái, Text phải --- */
+    .work-content {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 5vw;
+        width: 90vw;
+        max-width: 1400px;
+        margin-top: 5vh;
+    }
+
+    .video-container {
+        flex: 1 1 0;
+    }
+
+    .text-content {
+        flex: 1 1 0;
+        max-width: 520px;
+        min-width: 420px;
+        margin-left: 4vw;
+        text-align: left;
+        margin-top: 0;
+    }
+
+    /* --- Heading & Paragraph --- */
+    .work-category {
+        font-size: 7rem;
+        font-family: 'UnifrakturMaguntia', cursive;
+        font-weight: normal;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: var(--text-cream);
+        width: 100%;
+    }
+
+    .project-title {
+        font-size: 3rem;
+        font-family: 'Gloock', serif;
+        color: var(--text-cream);
+        font-weight: normal;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        max-width: 100%;
+        white-space: normal;
+        word-break: break-word;
+        hyphens: auto;
+    }
+
+    .project-text p,
+    .project-description p {
+        font-family: 'Lexend', sans-serif;
+        color: var(--text-white);
+        font-size: 1.5rem;
+        line-height: 1.5;
+        max-width: 690px;
+        text-align: left;
+    }
+
+    /* --- Gallery/Highlights --- */
+    .visual-highlights {
+        width: 96vw;
+        max-width: 96vw;
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    .section-subheading {
+        font-family: 'Gloock', serif;
+        font-size: 5rem;
+        color: var(--text-cream);
+        font-weight: normal;
+        text-align: center;
+        margin-bottom: 6vh;
+    }
+
+    .highlights-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 27vw);
+        /* 2 landscape rows */
+        gap: 2.4vw;
+        width: 96vw;
+        max-width: 96vw;
+        margin: 4vh auto;
+        justify-items: center;
+        align-items: center;
+    }
+
+    .highlight-item {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 16 / 9;
+        /* Or 3/2, whatever fits your images best */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: var(--bg-black);
+        /* optional decorative bg */
+        border-radius: 12px;
+    }
+
+    .highlight-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Fill landscape box, cropping if needed */
+        border-radius: 11px;
+        background: var(--bg-black);
+        box-shadow: 0 2px 16px rgba(27, 18, 18, 0.13);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .highlight-item img:hover {
+        transform: scale(1.05);
+    }
+
+    .return-top {
+        display: none !important;
+    }
+}
+
+/* --- Nếu là trang Art Gallery: 2 hàng x 3 cột --- */
+body:has(.work-category:contains("Art")) .highlights-grid,
+.art-page-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+}
+/* =========================================
+   ĐỒNG BỘ HÓA GIAO DIỆN DESKTOP (1024px+)
+   ========================================= */
+@media screen and (min-width: 1024px) {
+
+/* 6. Đồng bộ Navigation Links trên Desktop */
+    .nav-links-desktop a {
+        font-family: var(--body-font);
+        font-size: 1.2rem;
+        font-weight: 300;
+        letter-spacing: 0.05em;
+        text-transform: none;
+    }
+
+    /* 7. Nút Tab (nếu có ở trang Graphic/Web) */
+    .tab-btn {
+        font-weight: 400;
+        font-size: 1.1rem;
+        letter-spacing: 0.02em;
+        padding: 12px 35px;
+    }
+}

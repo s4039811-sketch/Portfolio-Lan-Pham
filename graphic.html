@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Design Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Gloock&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Lan Pham Portfolio</title>
+
+        <link rel="icon" type="image/png" href="a2_assets/logo.png">
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+</head>
+
+<body>
+    <div class="custom-cursor"></div>
+
+
+    <section class="navigation-bar">
+        <div class="nav-container">
+            <a href="home.html" class="logo-link">
+                <img src="a2_assets/logo.png" alt="Logo" class="logo">
+            </a>
+
+            <div class="nav-links-desktop">
+                <a href="about.html">About</a>
+                <a href="works.html">Works</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+            <img src="a2_assets/Menu.png" alt="menu" class="menu-icon" id="menuBtn">
+        </div>
+    </section>
+
+    <div id="side-menu" class="overlay">
+        <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
+        <div class="overlay-content">
+            <a href="about.html">About</a>
+            <a href="works.html">Works</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </div>
+    <div id="backdrop"></div>
+    <section class="work-section">
+        <div class="work-content">
+            <h1 class="work-category">Graphic Design</h1>
+        </div>
+
+        <div class="tab-container">
+            <button class="tab-btn active" data-tab="0">SC</button>
+            <button class="tab-btn" data-tab="1">Visual Comm</button>
+            <button class="tab-btn" data-tab="2">DMS2</button>
+        </div>
+
+        <div class="gallery-plus-text">
+            <div class="gallery-wrapper">
+                <div class="arrow left-arrow" id="prevBtn">
+                    <img src="a2_assets/left-arrow.png" alt="left_arrow">
+                </div>
+
+                <div class="image-display-area">
+                    <img src="a2_assets/20_11_postcardfront.png" id="mainImage" alt="Gallery Image">
+                </div>
+
+                <div class="arrow right-arrow" id="nextBtn">
+                    <img src="a2_assets/right-arrow.png" alt="right_arrow">
+                </div>
+            </div>
+
+            <div class="text-content">
+                <h2 class="project-title">Teacher Appreciation Day</h2>
+                <div class="project-description">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Design Page | Lan Pham Portfolio</title>
+    
+    <link rel="icon" type="image/png" href="a2_assets/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Gloock&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="custom-cursor"></div>
+
+    <section class="navigation-bar">
+        <div class="nav-container">
+            <a href="home.html" class="logo-link">
+                <img src="a2_assets/logo.png" alt="Logo" class="logo">
+            </a>
+
+            <div class="nav-links-desktop">
+                <a href="about.html">About</a>
+                <a href="works.html">Works</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+            <img src="a2_assets/Menu.png" alt="menu" class="menu-icon" id="menuBtn">
+        </div>
+    </section>
+
+    <div id="side-menu" class="overlay">
+        <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
+        <div class="overlay-content">
+            <a href="about.html">About</a>
+            <a href="works.html">Works</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </div>
+
+    <div id="backdrop"></div>
+
+    <section class="work-section">
+        <h1 class="work-category">3D Modelling</h1>
+
+        <div class="work-content">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/Wpq04f0CfTk" allowfullscreen></iframe>
+            </div>
+
+            <div class="text-content">
+                <h2 class="project-title">Cong cafe</h2>
+                <div class="project-text">
+                    <p>
+                        This project presents a 3D model of Cong Cafe, a Vietnamese cafe featuring subsidy-era interior design. 
+                        It aims to authentically recreate vintage architectural and decorative elements, highlighting the cultural 
+                        nostalgia and unique atmosphere that define the cafe.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="visual-highlights">
+        <h2 class="section-subheading">Visual Highlights</h2>
+        
+        <div class="highlights-grid">
+            <div class="highlight-item">
+                <img src="a2_assets/3d_1.png" alt="3D Highlight 1">
+            </div>
+            <div class="highlight-item">
+                <img src="a2_assets/3d_2.png" alt="3D Highlight 2">
+            </div>
+            <div class="highlight-item">
+                <img src="a2_assets/3d_3.png" alt="3D Highlight 3">
+            </div>
+        </div>
+
+        <h2 class="return-top" id="backToTop">Back to top</h2>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
