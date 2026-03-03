@@ -157,9 +157,9 @@ const webHighlights = document.getElementById("webHighlights"); // Thêm dòng n
 if (webIframe && webTabBtns.length > 0) {
     const webProjectData = [
         {
-            title: "A Tender Glow",
-            description: "'A Tender Glow' is a collaborative poem (written with ChatGPT), inspired by Laufey's 'A Night to Remember'. The objective is to create a dreamy, elegant interface that conveys the couple's emotions while ensuring a relaxing user experience.",
-            videoEmbedUrl: "https://www.youtube.com/embed/We8HQm9GmmM", 
+            title: "The Hollow Classroom",
+            description: "The Hollow Classroom is an interactive narrative experience centered on the systematic extraction of innocence. Set within a relentless educational machine, the project chronicles a student’s journey as their freedom, creativity, and identity are stripped away through high-pressure testing and rigid discipline. What remains at graduation is a \"model citizen\"—a high-achieving yet hollow entity whose true self has been extracted to fuel the seamless functioning of society.",
+            videoEmbedUrl: "https://www.youtube.com/embed/XIkaIRJpvVU", 
             showBackToTop: true,
             showHighlights: true // Hiện Visual Highlights cho tab này
         },
@@ -259,6 +259,39 @@ if (menuBtn && sideMenu) {
         // Nếu click không nằm trong sideMenu và không phải là nút mở menu
         if (isOpen && !sideMenu.contains(e.target) && !menuBtn.contains(e.target)) {
             hideMenu();
+        }
+    });
+}
+/* =========================================
+   IMAGE FULLSCREEN MODAL LOGIC
+   ========================================= */
+const imageModal = document.getElementById('image-modal');
+const modalImg = document.getElementById('modal-img');
+
+// Tìm tất cả các ảnh nằm trong class highlight-item (của 3 trang) 
+// và ảnh trong mục tab Interactive (image-display-area)
+const clickableImages = document.querySelectorAll('.highlight-item img, .image-display-area img');
+
+if (imageModal && modalImg) {
+    // Thêm sự kiện click cho từng ảnh
+    clickableImages.forEach(img => {
+        // Cấu hình con trỏ chuột custom khi hover vào ảnh
+        img.addEventListener('mouseover', () => cursor.classList.add('active'));
+        img.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+        
+        img.addEventListener('click', function() {
+            imageModal.classList.add('show');
+            modalImg.src = this.src; // Lấy source của ảnh được click gắn vào modal
+        });
+    });
+
+    // Sự kiện đóng modal khi click ra ngoài ảnh
+    imageModal.addEventListener('click', function(e) {
+        // Nếu click vào vùng nền mờ hoặc chữ caption (không click vào chính bức ảnh)
+        if (e.target !== modalImg) {
+            imageModal.classList.remove('show');
+            // Dọn dẹp src khi đóng để tránh chớp ảnh cũ trong lần mở sau
+            setTimeout(() => { modalImg.src = ""; }, 300);
         }
     });
 }

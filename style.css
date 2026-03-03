@@ -828,7 +828,7 @@ h3.role {
     opacity: 1;
 }
 }
-/* BREAKPOINT CHO IPAD-HERO (Từ 768px tới dưới 1024px) */
+/* BREAKPOINT CHO TABLET-HERO (Từ 768px tới dưới 1024px) */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
     .hero-grid-container {
         display: flex;
@@ -1309,7 +1309,7 @@ h3.role {
         /* Giãn chữ cho thoáng */
         transition: opacity 0.3s;
     }
-
+    /*BREAKPOINT DESKTOP-WORKS (Từ 1024px trở lên) */
     @media screen and (min-width: 1024px) {
 
         /* Loại bỏ hiệu ứng cuộn ngang trên Desktop để dàn hàng ngang như ảnh */
@@ -1379,11 +1379,8 @@ h3.role {
         cursor: auto;
     }
 }
-
+ /*BREAKPOINT DESKTOP-GRAPHIC (Từ 1024px trở lên) */
 @media screen and (min-width: 1024px) {
-
-    /*GRAPHIC DESIGN-DESKTOP*/
-
     /* Main container for the gallery and text */
     .gallery-plus-text {
         display: flex;
@@ -1597,6 +1594,7 @@ h3.role {
 
     .video-container {
         flex: 1 1 0;
+        margin-top: 7vh;
     }
 
     .text-content {
@@ -1732,5 +1730,102 @@ body:has(.work-category:contains("Art")) .highlights-grid,
         font-size: 1.1rem;
         letter-spacing: 0.02em;
         padding: 12px 35px;
+    }
+}
+
+/* =========================================
+   IMAGE FULLSCREEN MODAL (LIGHTBOX)
+   ========================================= */
+.image-modal {
+    display: none; 
+    position: fixed;
+    z-index: 4000; 
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85); /* Tối background thêm chút để nổi ảnh */
+    backdrop-filter: blur(8px); 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    padding: 2vh 0; /* Giữ padding an toàn trên dưới */
+    box-sizing: border-box;
+    cursor: none; /* Giữ custom cursor nếu muốn */
+}
+
+.image-modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+/* KHUNG ẢNH MẶC ĐỊNH (Áp dụng cho Web & 3D) */
+.modal-content {
+    max-width: 85vw; 
+    max-height: 75vh; 
+    object-fit: contain; /* Đảm bảo KHÔNG kéo giãn méo ảnh */
+    border-radius: 8px; 
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5); 
+}
+
+/* OVERRIDE DÀNH RIÊNG CHO TRANG ART */
+/* Ép ảnh nhỏ phóng to nhưng KHÔNG làm phình khung DOM thừa thãi, giải quyết triệt để lỗi click */
+.art-modal .modal-content {
+    height: 75vh;     /* Desktop màn hình ngang: Ưu tiên ép chiều cao to hết cỡ */
+    width: auto;      /* Chiều rộng tự động co giãn theo tỉ lệ gốc -> Khung ôm sát ảnh! */
+    max-width: 85vw;  /* Đảm bảo khung không bao giờ bị tràn bề ngang màn hình */
+}
+
+/* CHỮ CHÚ THÍCH (CAPTION) MẶC ĐỊNH (Desktop) */
+.modal-caption {
+    margin-top: 3vh; 
+    color: var(--text-white);
+    font-family: 'Lexend', sans-serif;
+    /* Desktop: Cỡ chữ an toàn (Min 14px, Tối ưu 1.5vw, Max 20px) */
+    font-size: clamp(0.875rem, 1.5vw, 1.25rem); 
+    font-weight: 300;
+    text-align: center;
+    letter-spacing: 0.05em;
+    padding: 0 1rem;
+    pointer-events: none; /* Tránh click dính text không thoát được */
+}
+
+/* --- BREAKPOINT MODAL: CHO TABLET (768px đến 1023px) --- */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .modal-content {
+        max-width: 90vw; 
+        max-height: 80vh; 
+    }
+    .art-modal .modal-content {
+        width: 90vw;      /* Tablet màn hình dọc: Ưu tiên ép chiều rộng to hết cỡ */
+        height: auto;     /* Chiều cao tự động co giãn theo tỉ lệ -> Khung ôm sát ảnh! */
+        max-height: 80vh; 
+    }
+    .modal-caption {
+        /* Tablet: Min 16px, Tối ưu 2vw, Max 22px */
+        font-size: clamp(1rem, 2vw, 1.375rem);
+        margin-top: 3vh; /* Đẩy chữ xa ảnh ra một chút xíu */
+    }
+}
+
+/* --- BREAKPOINT MODAL: CHO MOBILE (Dưới 768px) --- */
+@media screen and (max-width: 767px) {
+    .modal-content {
+        max-width: 95vw; 
+        max-height: 75vh; /* Nhường thêm chỗ trống phía dưới màn hình mobile */
+        border-radius: 4px; /* Thu nhỏ độ bo góc cho màn hình hẹp */
+    }
+    .art-modal .modal-content {
+        width: 95vw;      /* Mobile màn hình dọc: Ưu tiên ép chiều rộng to hết cỡ */
+        height: auto;     /* Chiều cao ôm sát ảnh, không tạo ra khoảng trống flex thừa */
+        max-height: 75vh; 
+    }
+    .modal-caption {
+        /* Mobile: Cỡ chữ tự động từ Min 12px đến Max 16px */
+        font-size: clamp(0.75rem, 3.5vw, 1rem);
+        margin-top: 4vh; /* Cách xa ảnh hơn để ngón tay dễ bấm vùng trống */
+        line-height: 1.4;
     }
 }
